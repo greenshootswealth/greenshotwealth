@@ -93,7 +93,7 @@ const FOUNDERS: FounderItem[] = [
   {
     name: "Kaushal Kapasi",
     first: "Kaushal",
-    role: "Co-founder",
+    role: "Chartered Accountant",
     title: "Chartered Accountant & Wealth Architect",
     line: "14 years in finance taught me one thing: wealth isn't built by products, it's built by structure. Helping families and individuals build wealth the way great businesses are built: with discipline, clarity and a design that lasts generations.",
     quote: "I don't merely advise. I bring clarity, direction and structure to your financial journey, as a trusted advisor and a partner in your growth.",
@@ -107,7 +107,7 @@ const FOUNDERS: FounderItem[] = [
       storyHeadline:
         "14 years in finance taught me one thing: wealth isn't built by products, it's built by structure.",
       storyBody:
-        "As a Chartered Accountant, I've spent over a decade inside the numbers. Today, as Co-Founder of Green Shoots Wealth, I help families and individuals build wealth the way great businesses are built: with discipline, clarity and a design that lasts generations.",
+        "As a Chartered Accountant, I've spent over a decade inside the numbers. Today, at Green Shoots Wealth, I help families and individuals build wealth the way great businesses are built: with discipline, clarity and a design that lasts generations.",
       why: {
         quote:
           "I don't merely advise. I bring clarity, direction and structure to your financial journey, as a trusted advisor and a partner in your growth.",
@@ -139,7 +139,7 @@ const FOUNDERS: FounderItem[] = [
 
 const TEAM = [
   { topic: "Financial advisory", name: "Saloni Mehta", role: "Founder & Financial Advisor", photo: "/team/saloni_mehta_new.webp", tint: "#F5F1E8" },
-  { topic: "Tax advisory & compliance", name: "Kaushal Kapasi", role: "Co-founder & Chartered Accountant", photo: "/team/kaushal_kapasi_new.webp", tint: "#EEF0D9" },
+  { topic: "Tax advisory & compliance", name: "Kaushal Kapasi", role: "Chartered Accountant", photo: "/team/kaushal_kapasi_new.webp", tint: "#EEF0D9" },
   { topic: "Research & investment analysis", name: "Hetvi Soni", role: "Research & Investment Analysis", photo: "/team/hetvi_soni.webp", tint: "#E4ECDF" },
   { topic: "Client onboarding & analysis", name: "Vedant Thorve", role: "Client Onboarding & Analysis", photo: "/team/vedant_pdf.webp", tint: "#F8F4EA" },
   { topic: "Transaction support", name: "Sameer Shinde", role: "Transaction Support", photo: "/team/sameer_coat_pant.webp", tint: "#F5F1E8" },
