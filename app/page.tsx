@@ -223,7 +223,7 @@ function VideoHero() {
 }
 
 /* ------------------------------------------------------------------ */
-/* Leadership: Founder & Co-founder                                    */
+/* Leadership & Strategic Advisory                                     */
 /* ------------------------------------------------------------------ */
 
 function Leadership() {
@@ -289,18 +289,17 @@ function Leadership() {
         {/* Subtle Leadership Divider */}
         <div className="w-full h-px bg-[#1F3A2C]/10 my-20 sm:my-28" />
 
-        {/* 2. Co-founder: Kaushal Kapasi */}
+        {/* 2. Kaushal Kapasi: Chartered Accountant */}
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 items-center">
           {/* Copy Column (Left on desktop) */}
           <div className="lg:col-span-7 order-2 lg:order-1">
-            <Reveal variant="fade"><span className="gs-eyebrow text-[#52704e]">Co-Founder</span></Reveal>
+            <Reveal variant="fade"><span className="gs-eyebrow text-[#52704e]">Tax Advisory</span></Reveal>
             <RevealLines
               as="h2"
               className="gs-h1 text-[#1F3A2C] mt-6"
               lines={[
                 <>Kaushal Kapasi.</>,
-                <em key="b" className="text-[#52704e]">Chartered Accountant</em>,
-                <em key="c" className="text-[#52704e]">&amp; co-founder.</em>,
+                <em key="b" className="text-[#52704e]">Chartered Accountant.</em>,
               ]}
             />
             <Reveal delay={200} className="mt-8 max-w-xl">
@@ -333,7 +332,7 @@ function Leadership() {
                 <Parallax speed={0.06} className="absolute inset-0">
                   <Image
                     src="/team/kaushal_kapasi_new.webp"
-                    alt="Kaushal Kapasi, Co-founder & Chartered Accountant"
+                    alt="Kaushal Kapasi, Chartered Accountant"
                     fill
                     sizes="(min-width:1024px) 36vw, 100vw"
                     className="object-cover object-[50%_10%]"
