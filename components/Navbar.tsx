@@ -57,7 +57,7 @@ const APPROACH_STEPS = [
 const INVEST_ITEMS = [
   { title: "India Investing", desc: "Mutual funds, goal-linked SIPs, tax-aware portfolios.", href: "/indian-investing", Icon: IconRupee, img: "/indian_investing_image.jpg", tag: "Bharat's markets" },
   { title: "Global Investing", desc: "USD accounts and international funds.", href: "/global-investing", Icon: IconGlobe, img: "/global_investing_image.jpg", tag: "Beyond borders" },
-  { title: "GIFT City (IFSC)", desc: "India's international gateway for cross-border wealth.", href: "/gift-city", Icon: IconTowers, img: "/city.png", tag: "The gateway" },
+  { title: "GIFT City (IFSC)", desc: "India's international gateway for cross-border wealth.", href: "/gift-city", Icon: IconTowers, img: "/images/gift_city.webp", tag: "The gateway" },
   { title: "Women & Wealth", desc: "Planning for the years she may manage alone.", href: "/women-and-wealth", Icon: IconVenus, img: "/images/women_hero_authentic.jpg", tag: "Her plan, her terms" },
 ];
 
