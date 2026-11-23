@@ -12,8 +12,8 @@ const content: InvestContent = {
     title: ["Global access,", "from home ground."],
     body: "GIFT City IFSC is India's international financial centre, designed to facilitate global financial services and cross-border investments. Eligible residents and NRIs can use permitted structures to invest internationally.",
     points: ["Regulated by IFSCA", "USD-denominated structures", "For residents and NRIs, subject to eligibility"],
-    image: "/office/office_plaque.webp",
-    imageAlt: "The Green Shoots Wealth emblem at our Mumbai headquarters",
+    image: "/images/gift_city.webp",
+    imageAlt: "GIFT City IFSC — India's International Financial Services Centre for cross-border wealth",
   },
   solutionsTitle: ["What GIFT City", "can open up."],
   solutions: [
