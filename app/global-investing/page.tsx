@@ -12,8 +12,9 @@ const content: InvestContent = {
     title: ["One country is one bet.", "Spread the rest."],
     body: "Markets, sectors and currencies move differently. Holding part of your wealth abroad can soften the swings of any single economy, and gives you access to companies that aren't listed in India.",
     points: ["Across markets, sectors and currencies", "Matched to your residency and goals", "Part of one plan, not a separate pot"],
-    image: "/images/india_gdp_growth_4x5.webp",
-    imageAlt: "UNSTOPPABLE INDIA - FY26 GDP Growth Rate ranking India as the brightest spot at 7.7% vs global economies",
+    image: "/images/indian_investing_advisory_4x5.webp",
+    imageAlt: "India's road to $30 trillion — from $4.15 trillion in 2026 (IMF estimate) to $6.79 trillion in 2031 (IMF projection) and a $30 trillion ambition by 2050",
+    imageAspect: "1085 / 1449",
   },
   solutionsTitle: ["Ways to invest", "beyond India."],
   solutions: [

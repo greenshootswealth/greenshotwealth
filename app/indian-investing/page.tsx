@@ -12,8 +12,9 @@ const content: InvestContent = {
     title: ["India has opportunities.", "Choosing well is the hard part."],
     body: "There are thousands of schemes, and new ones every month. We narrow it down to the few that fit your goals, your timeline and the amount of risk you can live with.",
     points: ["Linked to your goals, not to trends", "Tax-aware from the start", "Reviewed, never forgotten"],
-    image: "/images/indian_investing_advisory_4x5.webp",
-    imageAlt: "Growing Wealth Across Indian Markets — Investment solutions across Mutual Funds, SIP, Equity, Fixed Income, Multi-Asset, SIF, Insurance, and Retirement Planning",
+    image: "/indian_investing.png",
+    imageAlt: "India has opportunities. Choosing well is the hard part. — 01 Linked to your goals, not to trends; 02 Tax-aware from the start; 03 Reviewed, never forgotten",
+    imageAspect: "1214 / 1295",
   },
   solutionsTitle: ["What we can", "help you build."],
   solutions: [

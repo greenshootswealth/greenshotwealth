@@ -242,28 +242,58 @@ export default function BeliefsManifesto() {
     // Initial paint at stage 0 (desktop only; the stacked layout paints on scroll)
     if (window.matchMedia("(min-width: 1024px)").matches) paint(0);
 
-    // Below lg the plates are stacked in normal flow (the pinned deck is
-    // taller than a phone screen and would clip). Each plate simply rises in.
+    // Below lg the pinned deck is taller than a phone screen and would clip.
+    // Instead each plate is `position: sticky` in normal flow: it scrolls up
+    // until its whole body is on screen, holds, and the next plate slides
+    // over it while it settles back into the deck.
     const desktop = window.matchMedia("(min-width: 1024px)");
     const reduced = window.matchMedia("(prefers-reduced-motion: reduce)");
+    let stacked = false;
 
     const paintStacked = () => {
       const vh = window.innerHeight;
+      const cards = cardRefs.current;
+      cards.forEach((card, i) => {
+        if (!card) return;
+        const h = card.offsetHeight;
+        // Stick just under the header, or — for a plate taller than the
+        // screen — once its bottom edge is in view, so nothing is hidden.
+        const stickTop = Math.min(88 + i * 12, vh - h - 16);
+        card.style.top = `${stickTop}px`;
+        card.style.opacity = "1";
+
+        const next = cards[i + 1];
+        let cover = 0;
+        if (next && !reduced.matches) {
+          const gap = next.getBoundingClientRect().top - card.getBoundingClientRect().top;
+          cover = clamp(1 - gap / Math.max(1, Math.min(h, vh)), 0, 1);
+        }
+        const e = cover * cover * (3 - 2 * cover);
+        card.style.transformOrigin = "50% 0%";
+        card.style.transform = `scale(${(1 - 0.06 * e).toFixed(4)})`;
+        card.style.filter = e > 0.001 ? `brightness(${(1 - 0.08 * e).toFixed(3)})` : "";
+      });
+    };
+
+    const clearStacked = () => {
       cardRefs.current.forEach((card) => {
         if (!card) return;
-        const top = card.getBoundingClientRect().top;
-        const t = reduced.matches ? 1 : clamp((vh * 0.98 - top) / (vh * 0.3), 0, 1);
-        const e = 1 - Math.pow(1 - t, 3);
-        card.style.transform = `translate3d(0, ${((1 - e) * 48).toFixed(1)}px, 0) scale(${(0.97 + 0.03 * e).toFixed(3)})`;
-        card.style.opacity = e.toFixed(3);
+        card.style.top = "";
+        card.style.filter = "";
+        card.style.transformOrigin = "";
       });
     };
 
     const onScroll = () => {
       if (!desktop.matches) {
         if (rafId) { cancelAnimationFrame(rafId); rafId = 0; }
+        stacked = true;
         paintStacked();
         return;
+      }
+      if (stacked) {
+        stacked = false;
+        clearStacked();
       }
       const r = section.getBoundingClientRect();
       const vh = window.innerHeight;
@@ -389,7 +419,7 @@ export default function BeliefsManifesto() {
               <div
                 key={plate.roman}
                 ref={(el) => { cardRefs.current[i] = el; }}
-                className={`relative lg:absolute lg:inset-0 rounded-[32px] sm:rounded-[36px] p-6 sm:p-8 lg:p-9 flex flex-col justify-between border shadow-[0_-22px_50px_-20px_rgba(31,58,44,0.32)] ${plate.borderColor} overflow-hidden will-change-transform`}
+                className={`sticky lg:absolute lg:inset-0 rounded-[32px] sm:rounded-[36px] p-6 sm:p-8 lg:p-9 flex flex-col justify-between border shadow-[0_-22px_50px_-20px_rgba(31,58,44,0.32)] ${plate.borderColor} overflow-hidden will-change-transform`}
                 style={{
                   background: plate.bg,
                   zIndex: 20 + i,
