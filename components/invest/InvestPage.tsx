@@ -26,6 +26,8 @@ export type InvestContent = {
     points: string[];
     image: string;
     imageAlt: string;
+    /** CSS aspect-ratio of the image box (defaults to 4 / 5). Match it to infographics so no text is cropped. */
+    imageAspect?: string;
     video?: string;
     poster?: string;
   };
@@ -152,7 +154,7 @@ export default function InvestPage({ c }: { c: InvestContent }) {
             </ul>
           </div>
           <div className="lg:col-span-6">
-            <div className="relative aspect-[4/5] max-w-lg lg:max-w-none mx-auto rounded-[28px] overflow-hidden bg-white border border-[#1F3A2C]/10 shadow-[0_20px_50px_-15px_rgba(31,58,44,0.18)]">
+            <div style={c.why.imageAspect ? { aspectRatio: c.why.imageAspect } : undefined} className="relative aspect-[4/5] max-w-lg lg:max-w-none mx-auto rounded-[28px] overflow-hidden bg-white border border-[#1F3A2C]/10 shadow-[0_20px_50px_-15px_rgba(31,58,44,0.18)]">
               {c.why.video ? (
                 <video
                   src={c.why.video}
