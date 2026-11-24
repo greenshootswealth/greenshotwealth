@@ -14,9 +14,10 @@ async function main() {
     where: { username: defaultUser },
   });
 
+  const salt = await bcrypt.genSalt(12);
+  const passwordHash = await bcrypt.hash(defaultPass, salt);
+
   if (!existingAdmin) {
-    const salt = await bcrypt.genSalt(12);
-    const passwordHash = await bcrypt.hash(defaultPass, salt);
     await prisma.adminUser.create({
       data: {
         username: defaultUser,
@@ -26,7 +27,11 @@ async function main() {
     });
     console.log(`[Seed] Created initial admin user "${defaultUser}" with salted bcrypt hash.`);
   } else {
-    console.log(`[Seed] Admin user "${defaultUser}" already exists.`);
+    await prisma.adminUser.update({
+      where: { username: defaultUser },
+      data: { passwordHash },
+    });
+    console.log(`[Seed] Admin user "${defaultUser}" already exists; updated password hash.`);
   }
 
   // 2. Ensure at least one sample contact inquiry if table is empty
