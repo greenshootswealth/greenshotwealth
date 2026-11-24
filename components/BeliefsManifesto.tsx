@@ -239,10 +239,32 @@ export default function BeliefsManifesto() {
       }
     };
 
-    // Initial paint at stage 0
-    paint(0);
+    // Initial paint at stage 0 (desktop only; the stacked layout paints on scroll)
+    if (window.matchMedia("(min-width: 1024px)").matches) paint(0);
+
+    // Below lg the plates are stacked in normal flow (the pinned deck is
+    // taller than a phone screen and would clip). Each plate simply rises in.
+    const desktop = window.matchMedia("(min-width: 1024px)");
+    const reduced = window.matchMedia("(prefers-reduced-motion: reduce)");
+
+    const paintStacked = () => {
+      const vh = window.innerHeight;
+      cardRefs.current.forEach((card) => {
+        if (!card) return;
+        const top = card.getBoundingClientRect().top;
+        const t = reduced.matches ? 1 : clamp((vh * 0.98 - top) / (vh * 0.3), 0, 1);
+        const e = 1 - Math.pow(1 - t, 3);
+        card.style.transform = `translate3d(0, ${((1 - e) * 48).toFixed(1)}px, 0) scale(${(0.97 + 0.03 * e).toFixed(3)})`;
+        card.style.opacity = e.toFixed(3);
+      });
+    };
 
     const onScroll = () => {
+      if (!desktop.matches) {
+        if (rafId) { cancelAnimationFrame(rafId); rafId = 0; }
+        paintStacked();
+        return;
+      }
       const r = section.getBoundingClientRect();
       const vh = window.innerHeight;
       const run = Math.max(1, r.height - vh);
@@ -277,10 +299,10 @@ export default function BeliefsManifesto() {
     <section
       id="beliefs"
       ref={sectionRef}
-      className="relative w-full bg-[#F5F1E8] h-[340vh]"
+      className="relative w-full bg-[#F5F1E8] lg:h-[340vh]"
       aria-label="What we believe: The Green Shoots Charter"
     >
-      <div className="sticky top-0 h-screen w-full flex flex-col justify-center overflow-hidden py-4 sm:py-6 lg:py-8">
+      <div className="relative w-full py-20 sm:py-24 lg:sticky lg:top-0 lg:h-screen lg:flex lg:flex-col lg:justify-center lg:overflow-hidden lg:py-8">
         <div className="gs-container w-full grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-14 items-center">
           
           {/* ------------------------------------------------------------- */}
@@ -304,7 +326,7 @@ export default function BeliefsManifesto() {
             </div>
 
             {/* Architectural Chapter Rail */}
-            <div className="mt-8">
+            <div className="mt-8 hidden lg:block">
               <div className="relative pl-5 border-l border-[#1F3A2C]/15 space-y-4 pt-1">
                 {PILLARS.map((p, idx) => {
                   const isActive = activePillar === idx;
@@ -362,12 +384,12 @@ export default function BeliefsManifesto() {
           {/* ------------------------------------------------------------- */}
           {/* Right Column: Editorial Dossier Plates Stack                 */}
           {/* ------------------------------------------------------------- */}
-          <div className="lg:col-span-7 relative w-full h-[510px] sm:h-[540px] lg:h-[560px] max-w-[650px] mx-auto lg:mr-0 flex items-center justify-center">
+          <div className="lg:col-span-7 relative w-full max-w-[650px] mx-auto lg:mr-0 flex flex-col gap-5 sm:gap-6 lg:block lg:h-[560px]">
             {PILLARS.map((plate, i) => (
               <div
                 key={plate.roman}
                 ref={(el) => { cardRefs.current[i] = el; }}
-                className={`absolute inset-0 rounded-[32px] sm:rounded-[36px] p-6 sm:p-8 lg:p-9 flex flex-col justify-between border shadow-[0_-22px_50px_-20px_rgba(31,58,44,0.32)] ${plate.borderColor} overflow-hidden will-change-transform`}
+                className={`relative lg:absolute lg:inset-0 rounded-[32px] sm:rounded-[36px] p-6 sm:p-8 lg:p-9 flex flex-col justify-between border shadow-[0_-22px_50px_-20px_rgba(31,58,44,0.32)] ${plate.borderColor} overflow-hidden will-change-transform`}
                 style={{
                   background: plate.bg,
                   zIndex: 20 + i,
