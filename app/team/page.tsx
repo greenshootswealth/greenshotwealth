@@ -46,7 +46,7 @@ const FOUNDERS: FounderItem[] = [
     name: "Saloni Mehta",
     first: "Saloni",
     role: "Founder",
-    title: "Financial therapist & wealth architect",
+    title: "Financial Therapist & Wealth Architect",
     line: "Started Green Shoots so advice would begin with the person, not the product. Contact Saloni for comprehensive financial advisory, goal mapping, and wealth architecture.",
     quote: "Money is never just money. It's the school fees, the parents' care, the year off you've been promising yourself.",
     photo: "/team/saloni_mehta_new.webp",
