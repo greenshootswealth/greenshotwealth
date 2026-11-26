@@ -39,6 +39,14 @@ const content: InvestContent = {
     { q: "Can I invest for retirement through mutual funds?", a: "Mutual funds can form part of a retirement strategy, but the appropriate approach depends on your goals, time horizon, risk profile and overall financial plan." },
   ],
   tool: "sip",
+  featuredResearch: {
+    title: "Who Will Power India's Next Decade? Energy & Infrastructure Transformation",
+    subtitle: "Inside India's 555 GW non-fossil capacity milestone, transmission compounders, and the ₹33 Lakh Crore capital build-out.",
+    slug: "energy-infrastructure-india-next-decade",
+    pdfUrl: "/pdf/energy-infrastructure-india-next-decade.pdf",
+    badge: "Energy & Infrastructure · Research Report",
+    fileSize: "1.48 MB",
+  },
   close: {
     title: ["Start with your goals.", "We'll find the right fit."],
     body: "Tell us what you're building towards. We'll show you the options that suit it, in plain words.",

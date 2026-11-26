@@ -38,6 +38,14 @@ export type InvestContent = {
   faqs: { q: string; a: string }[];
   tool?: "sip" | "dollar-goal" | "gift-fit";
   showGdpGrowth?: boolean;
+  featuredResearch?: {
+    title: string;
+    subtitle: string;
+    slug: string;
+    pdfUrl: string;
+    badge: string;
+    fileSize: string;
+  };
   close: { title: [string, string]; body: string; image: string };
   disclaimer: string;
 };
@@ -218,6 +226,44 @@ export default function InvestPage({ c }: { c: InvestContent }) {
 
       {/* ---------------- Macro GDP Comparison (Unstoppable India) ---------------- */}
       {c.showGdpGrowth && <GdpGrowthSection />}
+
+      {/* ---------------- Featured Research Publication ---------------- */}
+      {c.featuredResearch && (
+        <section className="py-14 sm:py-20 bg-white border-y border-[#1F3A2C]/10" aria-label="Featured Research">
+          <div className="gs-container">
+            <div className="rounded-[28px] bg-[#faf8f5] border border-[#1F3A2C]/15 p-8 sm:p-12 flex flex-col md:flex-row items-start md:items-center justify-between gap-8">
+              <div className="space-y-3 max-w-2xl">
+                <span className="text-[11px] font-semibold tracking-wider uppercase text-[#8fa868] bg-[#EEF0D9] px-3.5 py-1 rounded-full font-sans">
+                  {c.featuredResearch.badge}
+                </span>
+                <h3 className="font-serif text-2xl sm:text-3xl text-[#1F3A2C] font-normal leading-tight">
+                  {c.featuredResearch.title}
+                </h3>
+                <p className="text-sm text-[#4a5f51] font-sans leading-relaxed">
+                  {c.featuredResearch.subtitle}
+                </p>
+              </div>
+              <div className="flex flex-wrap items-center gap-4 shrink-0 font-sans">
+                <Link
+                  href={`/insights/research/${c.featuredResearch.slug}`}
+                  className="gs-btn gs-btn-primary"
+                >
+                  <span>Read Online</span>
+                  <span className="gs-btn-arrow"><IconArrow className="w-3.5 h-3.5" /></span>
+                </Link>
+                <a
+                  href={c.featuredResearch.pdfUrl}
+                  download
+                  className="inline-flex items-center gap-2 px-5 py-3 rounded-full border border-[#1F3A2C]/20 bg-white text-xs font-semibold text-[#1F3A2C] hover:bg-[#EEF0D9] transition-colors"
+                >
+                  <span>Download PDF ({c.featuredResearch.fileSize})</span>
+                  <span>↓</span>
+                </a>
+              </div>
+            </div>
+          </div>
+        </section>
+      )}
 
       {/* ---------------- Audiences ---------------- */}
       {c.audiences && (
