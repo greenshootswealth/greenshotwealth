@@ -16,6 +16,7 @@ const COLS = [
       { label: "Women & Wealth", href: "/women-and-wealth" },
       { label: "Team", href: "/team" },
       { label: "Insights", href: "/insights" },
+      { label: "Research & Reports", href: "/insights?tab=research" },
       { label: "Contact", href: "/contact" },
     ],
   },

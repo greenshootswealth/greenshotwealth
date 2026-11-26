@@ -42,6 +42,14 @@ const content: InvestContent = {
     { q: "How can I know if GIFT City is right for me?", a: "It depends on your financial goals, residency, risk profile, existing portfolio, and need for international diversification. A conversation with our team can help you understand the relevant options." },
   ],
   tool: "gift-fit",
+  featuredResearch: {
+    title: "Investing Through GIFT City: A Dollar-Denominated Door to the World",
+    subtitle: "Explore our institutional research on the $250,000 LRS limit, USD funds, tax exemptions, and how to own global brands without leaving Indian soil.",
+    slug: "investing-through-gift-city-dollar-wealth",
+    pdfUrl: "/pdf/investing-through-gift-city-dollar-wealth.pdf",
+    badge: "GIFT City Series · Research Report",
+    fileSize: "140 KB",
+  },
   close: {
     title: ["Is GIFT City right for you?", "Let's find out together."],
     body: "It depends on your residency, your goals and what you already hold. One conversation is usually enough to tell.",
