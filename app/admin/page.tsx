@@ -4,6 +4,8 @@ import React, { useState, useEffect, useMemo, useCallback } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import NotionEditor, { BlogFormData } from "@/components/admin/NotionEditor";
+import ResearchManager from "@/components/admin/research/ResearchManager";
+import type { ConfirmOptions } from "@/components/admin/research/ResearchEditor";
 import {
   ToastContainer,
   ConfirmModal,
@@ -75,7 +77,8 @@ export default function AdminPortalPage() {
   const [loadingData, setLoadingData] = useState(false);
 
   // UI Tabs & Filters
-  const [activeTab, setActiveTab] = useState<"contacts" | "quizzes" | "newsletters" | "blogs">("contacts");
+  const [activeTab, setActiveTab] = useState<"contacts" | "quizzes" | "newsletters" | "blogs" | "research">("contacts");
+  const [researchCount, setResearchCount] = useState<number | null>(null);
   const [searchQuery, setSearchQuery] = useState("");
   const [statusFilter, setStatusFilter] = useState("ALL");
 
@@ -86,13 +89,16 @@ export default function AdminPortalPage() {
 
   // In-App Toast Notifications
   const [toasts, setToasts] = useState<ToastMessage[]>([]);
-  const addToast = (message: string, type: "success" | "error" | "info" = "info", title?: string) => {
-    const id = Date.now().toString() + Math.random().toString(36).substring(2, 6);
-    setToasts((prev) => [...prev, { id, message, type, title }]);
-    setTimeout(() => {
-      setToasts((prev) => prev.filter((t) => t.id !== id));
-    }, 4000);
-  };
+  const addToast = useCallback(
+    (message: string, type: "success" | "error" | "info" = "info", title?: string) => {
+      const id = Date.now().toString() + Math.random().toString(36).substring(2, 6);
+      setToasts((prev) => [...prev, { id, message, type, title }]);
+      setTimeout(() => {
+        setToasts((prev) => prev.filter((t) => t.id !== id));
+      }, 4000);
+    },
+    []
+  );
 
   // Custom Luxury Confirmation Modal
   const [confirmDialog, setConfirmDialog] = useState<{
@@ -113,6 +119,17 @@ export default function AdminPortalPage() {
   const closeConfirm = () => {
     setConfirmDialog((prev) => ({ ...prev, isOpen: false }));
   };
+
+  const openConfirm = useCallback((opts: ConfirmOptions) => {
+    setConfirmDialog({
+      isOpen: true,
+      ...opts,
+      onConfirm: () => {
+        setConfirmDialog((prev) => ({ ...prev, isOpen: false }));
+        opts.onConfirm();
+      },
+    });
+  }, []);
 
   // Modals
   const [selectedContact, setSelectedContact] = useState<Contact | null>(null);
@@ -823,6 +840,16 @@ export default function AdminPortalPage() {
               <span>Blogs &amp; Insights ({blogs.length})</span>
               <span className="w-2 h-2 rounded-full bg-[#8fa868]" />
             </button>
+            <button
+              onClick={() => setActiveTab("research")}
+              className={`px-4 py-2 rounded-lg text-xs font-semibold transition-all whitespace-nowrap ${
+                activeTab === "research"
+                  ? "bg-[#1F3A2C] text-white shadow-xs"
+                  : "text-[#5d7064] hover:text-[#1F3A2C]"
+              }`}
+            >
+              Research Reports{researchCount !== null ? ` (${researchCount})` : ""}
+            </button>
           </div>
 
           {/* Search & Actions */}
@@ -874,7 +901,7 @@ export default function AdminPortalPage() {
             )}
 
             {/* Export CSV Button */}
-            {activeTab !== "blogs" && (
+            {activeTab !== "blogs" && activeTab !== "research" && (
               <button
                 onClick={() => {
                   if (activeTab === "contacts") exportContactsCSV();
@@ -1180,6 +1207,16 @@ export default function AdminPortalPage() {
               </table>
             </div>
           </div>
+        )}
+
+        {/* TAB 5: RESEARCH REPORTS (PDF → WEB EDITION) */}
+        {activeTab === "research" && (
+          <ResearchManager
+            notify={addToast}
+            confirm={openConfirm}
+            searchQuery={searchQuery}
+            onCountChange={setResearchCount}
+          />
         )}
 
         {/* TAB 4: BLOGS & INSIGHTS (NOTION INTEGRATION) */}

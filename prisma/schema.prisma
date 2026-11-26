@@ -92,3 +92,28 @@ model BlogPost {
 }
 
 
+
+model ResearchReport {
+  id               String    @id @default(cuid())
+  slug             String    @unique
+  status           String    @default("DRAFT") // DRAFT, PUBLISHED
+  title            String
+  /// Structured report body. Shape: ReportContent in lib/research/types.ts
+  content          Json
+  publishedAt      DateTime  @default(now())
+  pdfUrl           String
+  coverImage       String
+  pageCount        Int       @default(0)
+  fileSizeBytes    Int       @default(0)
+  readMinutes      Int       @default(5)
+  originalFilename String?
+  /// Plain text extracted from the PDF. Used to regenerate and to fact-check figures.
+  sourceText       String?   @db.Text
+  aiModel          String?
+  generatedAt      DateTime?
+  createdAt        DateTime  @default(now())
+  updatedAt        DateTime  @updatedAt
+
+  @@index([status, publishedAt])
+  @@map("research_reports")
+}

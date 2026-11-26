@@ -1,3 +1,6 @@
+// The original hand-written research reports. Only used by scripts/seed-research-reports.ts
+// to load them into the database once; edit reports in the admin portal from then on.
+
 export interface PublicationSection {
   heading: string;
   subhead?: string;
@@ -648,7 +651,3 @@ export const PUBLICATIONS: Publication[] = [
     },
   },
 ];
-
-export function getPublicationBySlug(slug: string): Publication | undefined {
-  return PUBLICATIONS.find((p) => p.slug === slug);
-}
