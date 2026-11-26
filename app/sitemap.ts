@@ -1,5 +1,5 @@
 import type { MetadataRoute } from "next";
-import { PUBLICATIONS } from "@/lib/publications";
+import { getPublishedReports } from "@/lib/research/server";
 import { prisma } from "@/lib/prisma";
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
@@ -77,12 +77,18 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   ];
 
   // Research publications
-  const publicationRoutes: MetadataRoute.Sitemap = PUBLICATIONS.map((pub) => ({
-    url: `${siteUrl}/insights/research/${pub.slug}`,
-    lastModified: new Date(pub.publishedIso),
-    changeFrequency: "monthly",
-    priority: 0.85,
-  }));
+  let publicationRoutes: MetadataRoute.Sitemap = [];
+  try {
+    const reports = await getPublishedReports();
+    publicationRoutes = reports.map((pub) => ({
+      url: `${siteUrl}/insights/research/${pub.slug}`,
+      lastModified: new Date(pub.updatedIso),
+      changeFrequency: "monthly",
+      priority: 0.85,
+    }));
+  } catch (error) {
+    console.error("Failed to fetch research reports for sitemap:", error);
+  }
 
   // Dynamic blog posts from database
   let blogRoutes: MetadataRoute.Sitemap = [];

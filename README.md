@@ -35,3 +35,30 @@ The easiest way to deploy your Next.js app is to use the [Vercel Platform](https
 
 Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
 # greenshotwealth
+
+## Research reports (PDF → web page)
+
+Admins add research reports from **/admin → Research Reports**. Drop a PDF and:
+
+1. The browser reads the PDF (text, page count) and renders page 1 as the cover image.
+2. The PDF and cover upload straight to **Vercel Blob**, so large files skip the serverless body limit.
+3. A draft is created and **Groq** (`openai/gpt-oss-120b` by default) writes the web edition: title, summary, metrics, sections, tables, SEO and call to action. It only uses what is in the PDF.
+4. The editor flags every figure on the page that can't be found in the PDF text. Review it, then press **Publish**. Nothing goes live before that.
+
+Publishing, editing, unpublishing or deleting refreshes `/insights`, the report page and the sitemap straight away.
+
+### Environment variables
+
+| Variable | Purpose |
+| --- | --- |
+| `BLOB_READ_WRITE_TOKEN` | Set automatically once a Blob store is connected (Vercel → Storage → Blob → connect to project). Run `vercel env pull` to use it locally. |
+| `GROQ_API_KEY` | Groq API key for drafting reports. |
+| `GROQ_MODEL` | Optional. Defaults to `openai/gpt-oss-120b`. |
+
+### Code map
+
+- `lib/research/`: types, content validation, figure checker, Groq generator, cached queries
+- `app/api/admin/research/`: upload tokens, CRUD, generate
+- `components/admin/research/`: drop zone, list and editor
+- `components/research/ReportView.tsx`: the report page, shared by the public route and `/admin/research/preview/[id]`
+- `npm run research:seed`: one-time import of the original hand-written reports (`scripts/data/legacy-publications.ts`). Safe to re-run; it never overwrites existing reports.
